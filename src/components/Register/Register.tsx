@@ -8,7 +8,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import { AccountCircle, Lock } from "@mui/icons-material";
 import { useMutation } from "@apollo/client";
 
 import { IRegisterResponse } from "../../interfaces";
@@ -78,7 +78,7 @@ const Register = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <AccountCircle />
+                  <Lock />
                 </InputAdornment>
               ),
             }}
@@ -97,7 +97,7 @@ const Register = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <AccountCircle />
+                  <Lock />
                 </InputAdornment>
               ),
             }}
