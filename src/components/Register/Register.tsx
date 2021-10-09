@@ -6,36 +6,31 @@ import Box from "@mui/material/Box";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { useLazyQuery, gql } from "@apollo/client";
+import { useMutation, gql } from "@apollo/client";
 
 import Toast, { showToastSuccess, showToastError } from "../Toast/Toast";
+import { CatchingPokemon } from "@mui/icons-material";
 
-const Login = () => {
+const Register = () => {
   const [values, setValues] = React.useState({
     username: "",
     password: "",
-    token: "",
   });
   const handleChange = (prop: any) => (event: any) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-  const [login, { data, error, loading }] = useLazyQuery(
-    gql`
-      query Login($username: String!, $password: String!) {
-        login(user: { username: $username, password: $password }) {
-          token
-        }
-      }
-    `
-  );
+
+  const [registerUser, { data, error, loading }] = useMutation(gql`
+    mutation Register($username: String!, $password: String!) {
+      register(user: { username: $username, password: $password })
+    }
+  `);
   if (error) {
     showToastError(error.message);
-    console.log(JSON.stringify(error, null, 2));
   }
-  if (data && data.login.token) {
-    showToastSuccess("🦄 Logged in succesfully!");
-    localStorage.setItem("token", data.login.token as string);
-    console.log(data.login.token);
+  if (data && data.register) {
+    showToastSuccess("🦄 Registered in succesfully!");
+    console.log(data.register);
   }
 
   return (
@@ -72,19 +67,26 @@ const Login = () => {
       <Button
         variant="contained"
         onClick={() => {
-          login({
-            variables: {
-              username: values.username,
-              password: values.password,
-            },
-          });
+          try {
+            registerUser({
+              variables: {
+                username: values.username,
+                password: values.password,
+              },
+              onError(err) {
+                console.log(err);
+              },
+            });
+          } catch (err) {
+            console.log(err);
+          }
         }}
       >
-        Login
+        Register
       </Button>
       <Toast />
     </Box>
   );
 };
 
-export default Login;
+export default Register;

@@ -1,10 +1,10 @@
 import React from "react";
-import logo from "./logo.svg";
 import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
 import "./App.css";
 
 function App() {
-  return <Login />;
+  return <Register />;
 }
 
 export default App;
