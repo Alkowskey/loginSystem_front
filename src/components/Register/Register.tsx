@@ -45,7 +45,7 @@ const Register = () => {
         <Paper elevation={6}>
           <Stack m={2} pt={3} spacing={2} direction="column">
             <TextField
-              id="input-with-icon-textfield"
+              id="input-username"
               error={
                 values.username ? !isValidUsername(values.username) : false
               }
@@ -61,7 +61,7 @@ const Register = () => {
               variant="filled"
             />
             <TextField
-              id="input-with-icon-password"
+              id="input-password"
               error={
                 values.password ? !isValidPassword(values.password) : false
               }
@@ -78,11 +78,13 @@ const Register = () => {
               variant="filled"
             />
             <TextField
-              id="input-with-icon-password"
+              id="input-confPassword"
               error={
-                values.password ? !isValidPassword(values.password) : false
+                values.confPassword === ""
+                  ? false
+                  : values.confPassword !== values.password
               }
-              label="password"
+              label="confirm password"
               type="password"
               onChange={handleChange("confPassword")}
               InputProps={{
