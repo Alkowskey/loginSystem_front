@@ -5,21 +5,22 @@ import AppBarNavigation from "./components/AppBarNavigation/AppBarNavigation";
 import "./App.css";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import background from "./shared/background.png";
 
 import { Grid } from "@mui/material";
 
 function App() {
   return (
-    <div
-      className="MainApp"
-      style={{
-        backgroundImage: `url(${background})`,
-      }}
-    >
+    <div className="MainApp">
       <Router>
         <AppBarNavigation />
-        <Grid direction={"row"}>
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          style={{ minHeight: "100vh" }}
+        >
           <Switch>
             <Route path="/register">
               <Register />

@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Stack,
-  Grid,
   Button,
   Box,
   InputAdornment,
@@ -50,58 +49,54 @@ const Login = () => {
 
   return (
     <Box m={2} pt={3}>
-      <Grid item xs={4}>
-        <Paper elevation={6}>
-          <Typography m={2} pt={2} variant="h5" color="text.primary">
-            Log in
-          </Typography>
-          <Stack m={2} pt={0} spacing={2} direction="column">
-            <TextField
-              id="input-with-icon-textfield"
-              label="username"
-              onChange={handleChange("username")}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                ),
-              }}
-              variant="filled"
-            />
-            <TextField
-              id="input-with-icon-password"
-              label="password"
-              type="password"
-              onChange={handleChange("password")}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                ),
-              }}
-              variant="filled"
-            />
-          </Stack>
-          <Box m={2} pb={3}>
-            <Button
-              variant="contained"
-              onClick={() => {
-                const { check, err } = verifyForm(values);
-                if (!check) {
-                  showToastError(err);
-                  return;
-                }
-                handleResponse();
-              }}
-            >
-              Login
-            </Button>
-          </Box>
-          <Toast />
-        </Paper>
-      </Grid>
+      <Paper elevation={6} style={{ minWidth: "50vh" }}>
+        <Typography m={2} pt={2} variant="h5" color="text.primary">
+          Log in
+        </Typography>
+        <Stack m={2} pb={2} spacing={2} direction="column">
+          <TextField
+            id="input-with-icon-textfield"
+            label="username"
+            onChange={handleChange("username")}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AccountCircle />
+                </InputAdornment>
+              ),
+            }}
+            variant="filled"
+          />
+          <TextField
+            id="input-with-icon-password"
+            label="password"
+            type="password"
+            onChange={handleChange("password")}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AccountCircle />
+                </InputAdornment>
+              ),
+            }}
+            variant="filled"
+          />
+          <Button
+            variant="contained"
+            onClick={() => {
+              const { check, err } = verifyForm(values);
+              if (!check) {
+                showToastError(err);
+                return;
+              }
+              handleResponse();
+            }}
+          >
+            Login
+          </Button>
+        </Stack>
+        <Toast />
+      </Paper>
     </Box>
   );
 };

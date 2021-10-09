@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Stack,
-  Grid,
   Button,
   Box,
   InputAdornment,
@@ -51,88 +50,81 @@ const Register = () => {
 
   return (
     <Box m={2} pt={3}>
-      <Grid item xs={4}>
-        <Paper elevation={6}>
-          <Typography m={2} pt={2} variant="h5" color="text.primary">
-            Sign up
-          </Typography>
-          <Stack m={2} pt={0} spacing={2} direction="column">
-            <TextField
-              id="input-username"
-              error={
-                values.username ? !isValidUsername(values.username) : false
+      <Paper elevation={6} style={{ minWidth: "50vh" }}>
+        <Typography m={2} pt={2} variant="h5" color="text.primary">
+          Sign up
+        </Typography>
+        <Stack m={2} pb={2} spacing={2} direction="column">
+          <TextField
+            id="input-username"
+            error={values.username ? !isValidUsername(values.username) : false}
+            label="username"
+            onChange={handleChange("username")}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AccountCircle />
+                </InputAdornment>
+              ),
+            }}
+            variant="filled"
+          />
+          <TextField
+            id="input-password"
+            error={values.password ? !isValidPassword(values.password) : false}
+            label="password"
+            type="password"
+            onChange={handleChange("password")}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AccountCircle />
+                </InputAdornment>
+              ),
+            }}
+            variant="filled"
+          />
+          <TextField
+            id="input-confPassword"
+            error={
+              values.confPassword === ""
+                ? false
+                : values.confPassword !== values.password
+            }
+            label="confirm password"
+            type="password"
+            onChange={handleChange("confPassword")}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AccountCircle />
+                </InputAdornment>
+              ),
+            }}
+            variant="filled"
+          />
+          <Button
+            variant="contained"
+            onClick={() => {
+              const { password, confPassword } = values;
+              if (password !== confPassword) {
+                showToastError("Passwords are not the same");
+                return;
               }
-              label="username"
-              onChange={handleChange("username")}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                ),
-              }}
-              variant="filled"
-            />
-            <TextField
-              id="input-password"
-              error={
-                values.password ? !isValidPassword(values.password) : false
+              const { check, err } = verifyForm(values);
+              if (!check) {
+                showToastError(err);
+                return;
               }
-              label="password"
-              type="password"
-              onChange={handleChange("password")}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                ),
-              }}
-              variant="filled"
-            />
-            <TextField
-              id="input-confPassword"
-              error={
-                values.confPassword === ""
-                  ? false
-                  : values.confPassword !== values.password
-              }
-              label="confirm password"
-              type="password"
-              onChange={handleChange("confPassword")}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                ),
-              }}
-              variant="filled"
-            />
-          </Stack>
-          <Box m={2} pb={3}>
-            <Button
-              variant="contained"
-              onClick={() => {
-                const { password, confPassword } = values;
-                if (password !== confPassword) {
-                  showToastError("Passwords are not the same");
-                  return;
-                }
-                const { check, err } = verifyForm(values);
-                if (!check) {
-                  showToastError(err);
-                  return;
-                }
-                handleResponse();
-              }}
-            >
-              Register
-            </Button>
-          </Box>
-          <Toast />
-        </Paper>
-      </Grid>
+              handleResponse();
+            }}
+          >
+            Register
+          </Button>
+        </Stack>
+
+        <Toast />
+      </Paper>
     </Box>
   );
 };
