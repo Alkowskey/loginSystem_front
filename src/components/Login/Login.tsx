@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
+import React from "react";
+import {
+  Stack,
+  Grid,
+  Button,
+  Box,
+  InputAdornment,
+  TextField,
+  Paper,
+} from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { useLazyQuery, gql } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 
 import { LOGIN_QUERY } from "../../graphql/queries";
 
 import Toast, { showToastSuccess, showToastError } from "../Toast/Toast";
+import {
+  isValidPassword,
+  isValidUsername,
+  verifyForm,
+} from "../../utils/validation";
 
 const Login = () => {
   const [values, setValues] = React.useState({
@@ -33,50 +41,67 @@ const Login = () => {
   }
 
   return (
-    <Box>
-      <Stack spacing={2} direction="row">
-        <TextField
-          id="input-with-icon-textfield"
-          label="username"
-          onChange={handleChange("username")}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <AccountCircle />
-              </InputAdornment>
-            ),
-          }}
-          variant="filled"
-        />
-        <TextField
-          id="input-with-icon-password"
-          label="password"
-          type="password"
-          onChange={handleChange("password")}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <AccountCircle />
-              </InputAdornment>
-            ),
-          }}
-          variant="filled"
-        />
-      </Stack>
-      <Button
-        variant="contained"
-        onClick={() => {
-          login({
-            variables: {
-              username: values.username,
-              password: values.password,
-            },
-          });
-        }}
-      >
-        Login
-      </Button>
-      <Toast />
+    <Box m={2} pt={3}>
+      <Grid item xs={4}>
+        <Paper elevation={6}>
+          <Stack m={2} pt={3} spacing={2} direction="column">
+            <TextField
+              id="input-with-icon-textfield"
+              label="username"
+              error={
+                values.username ? !isValidUsername(values.username) : false
+              }
+              onChange={handleChange("username")}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AccountCircle />
+                  </InputAdornment>
+                ),
+              }}
+              variant="filled"
+            />
+            <TextField
+              id="input-with-icon-password"
+              label="password"
+              type="password"
+              error={
+                values.password ? !isValidPassword(values.password) : false
+              }
+              onChange={handleChange("password")}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AccountCircle />
+                  </InputAdornment>
+                ),
+              }}
+              variant="filled"
+            />
+          </Stack>
+          <Box m={2} pb={3}>
+            <Button
+              variant="contained"
+              onClick={() => {
+                const { check, err } = verifyForm(values);
+                if (!check) {
+                  showToastError(err);
+                  return;
+                }
+                login({
+                  variables: {
+                    username: values.username,
+                    password: values.password,
+                  },
+                });
+              }}
+            >
+              Login
+            </Button>
+          </Box>
+          <Toast />
+        </Paper>
+      </Grid>
     </Box>
   );
 };
