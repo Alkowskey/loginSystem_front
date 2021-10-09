@@ -8,6 +8,8 @@ import TextField from "@mui/material/TextField";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useLazyQuery, gql } from "@apollo/client";
 
+import { LOGIN_QUERY } from "../../graphql/queries";
+
 import Toast, { showToastSuccess, showToastError } from "../Toast/Toast";
 
 const Login = () => {
@@ -19,15 +21,7 @@ const Login = () => {
   const handleChange = (prop: any) => (event: any) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-  const [login, { data, error, loading }] = useLazyQuery(
-    gql`
-      query Login($username: String!, $password: String!) {
-        login(user: { username: $username, password: $password }) {
-          token
-        }
-      }
-    `
-  );
+  const [login, { data, error, loading }] = useLazyQuery(LOGIN_QUERY);
   if (error) {
     showToastError(error.message);
     console.log(JSON.stringify(error, null, 2));

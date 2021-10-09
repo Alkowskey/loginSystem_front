@@ -10,6 +10,7 @@ import { useMutation, gql } from "@apollo/client";
 
 import Toast, { showToastSuccess, showToastError } from "../Toast/Toast";
 import { CatchingPokemon } from "@mui/icons-material";
+import { REGISTER_MUTATION } from "../../graphql/mutations";
 
 const Register = () => {
   const [values, setValues] = React.useState({
@@ -20,11 +21,8 @@ const Register = () => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
-  const [registerUser, { data, error, loading }] = useMutation(gql`
-    mutation Register($username: String!, $password: String!) {
-      register(user: { username: $username, password: $password })
-    }
-  `);
+  const [registerUser, { data, error, loading }] =
+    useMutation(REGISTER_MUTATION);
   if (error) {
     showToastError(error.message);
   }
@@ -67,19 +65,12 @@ const Register = () => {
       <Button
         variant="contained"
         onClick={() => {
-          try {
-            registerUser({
-              variables: {
-                username: values.username,
-                password: values.password,
-              },
-              onError(err) {
-                console.log(err);
-              },
-            });
-          } catch (err) {
-            console.log(err);
-          }
+          registerUser({
+            variables: {
+              username: values.username,
+              password: values.password,
+            },
+          });
         }}
       >
         Register
