@@ -7,6 +7,7 @@ import {
   InputAdornment,
   TextField,
   Paper,
+  Typography,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useMutation } from "@apollo/client";
@@ -32,18 +33,30 @@ const Register = () => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
-  const [registerUser, { data, error }] = useMutation(REGISTER_MUTATION);
-  const registerResponse: IRegisterResponse = data;
-  if (error) showToastError(error.message);
-
-  if (registerResponse && registerResponse.register)
-    showToastSuccess("🦄 Registered in succesfully!");
+  const [registerUser] = useMutation(REGISTER_MUTATION, {
+    onCompleted: (data: IRegisterResponse) => {
+      if (data && data.register)
+        showToastSuccess("🦄 Registered in succesfully!");
+    },
+    onError: (error) => showToastError(error.message),
+  });
+  const handleResponse = () => {
+    registerUser({
+      variables: {
+        username: values.username,
+        password: values.password,
+      },
+    });
+  };
 
   return (
     <Box m={2} pt={3}>
       <Grid item xs={4}>
         <Paper elevation={6}>
-          <Stack m={2} pt={3} spacing={2} direction="column">
+          <Typography m={2} pt={2} variant="h5" color="text.primary">
+            Sign up
+          </Typography>
+          <Stack m={2} pt={0} spacing={2} direction="column">
             <TextField
               id="input-username"
               error={
@@ -111,12 +124,7 @@ const Register = () => {
                   showToastError(err);
                   return;
                 }
-                registerUser({
-                  variables: {
-                    username: values.username,
-                    password: values.password,
-                  },
-                });
+                handleResponse();
               }}
             >
               Register
