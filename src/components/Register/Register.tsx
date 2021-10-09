@@ -11,6 +11,8 @@ import {
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useMutation } from "@apollo/client";
 
+import { IRegisterResponse } from "../../interfaces";
+
 import { REGISTER_MUTATION } from "../../graphql/mutations";
 
 import Toast, { showToastSuccess, showToastError } from "../Toast/Toast";
@@ -31,13 +33,11 @@ const Register = () => {
   };
 
   const [registerUser, { data, error }] = useMutation(REGISTER_MUTATION);
-  if (error) {
-    showToastError(error.message);
-  }
-  if (data && data.register) {
+  const registerResponse: IRegisterResponse = data;
+  if (error) showToastError(error.message);
+
+  if (registerResponse && registerResponse.register)
     showToastSuccess("🦄 Registered in succesfully!");
-    console.log(data.register);
-  }
 
   return (
     <Box m={2} pt={3}>

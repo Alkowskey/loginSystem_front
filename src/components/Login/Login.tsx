@@ -11,6 +11,8 @@ import {
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useLazyQuery } from "@apollo/client";
 
+import { ILoginResponse } from "../../interfaces";
+
 import { LOGIN_QUERY } from "../../graphql/queries";
 
 import Toast, { showToastSuccess, showToastError } from "../Toast/Toast";
@@ -30,12 +32,13 @@ const Login = () => {
     setValues({ ...values, [prop]: event.target.value });
   };
   const [login, { data, error }] = useLazyQuery(LOGIN_QUERY);
+  const loginResponse: ILoginResponse = data;
   if (error) {
     showToastError(error.message);
   }
-  if (data && data.login.token) {
+  if (loginResponse && loginResponse.login.token) {
     showToastSuccess("🦄 Logged in succesfully!");
-    localStorage.setItem("token", data.login.token as string);
+    localStorage.setItem("token", loginResponse.login.token as string);
     localStorage.setItem("username", values.username as string);
   }
 
