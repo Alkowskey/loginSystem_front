@@ -17,11 +17,7 @@ import { ILoginResponse } from "../../interfaces";
 import { LOGIN_QUERY } from "../../graphql/queries";
 
 import Toast, { showToastSuccess, showToastError } from "../Toast/Toast";
-import {
-  isValidPassword,
-  isValidUsername,
-  verifyForm,
-} from "../../validation/validation";
+import { verifyForm } from "../../validation/validation";
 
 const Login = () => {
   const [values, setValues] = React.useState({
@@ -63,9 +59,6 @@ const Login = () => {
             <TextField
               id="input-with-icon-textfield"
               label="username"
-              error={
-                values.username ? !isValidUsername(values.username) : false
-              }
               onChange={handleChange("username")}
               InputProps={{
                 startAdornment: (
@@ -80,9 +73,6 @@ const Login = () => {
               id="input-with-icon-password"
               label="password"
               type="password"
-              error={
-                values.password ? !isValidPassword(values.password) : false
-              }
               onChange={handleChange("password")}
               InputProps={{
                 startAdornment: (

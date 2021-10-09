@@ -9,9 +9,6 @@ import {
 } from "@mui/material";
 
 import { createTheme } from "@mui/material/styles";
-import { green, purple } from "@mui/material/colors";
-
-import MenuIcon from "@mui/icons-material/Menu";
 
 import { Link } from "react-router-dom";
 
@@ -29,7 +26,7 @@ export default function AppBarNavigation() {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {username || "Login Page"}
+              {username || "Login App"}
             </Typography>
             <Link to="/login" color="primary">
               <Button
