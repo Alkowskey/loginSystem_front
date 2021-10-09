@@ -20,7 +20,7 @@ import {
   isValidPassword,
   isValidUsername,
   verifyForm,
-} from "../../utils/validation";
+} from "../../validation/validation";
 
 const Register = () => {
   const [values, setValues] = React.useState({
