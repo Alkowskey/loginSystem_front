@@ -1,3 +1,4 @@
+import React from "react";
 import {
   AppBar,
   Box,
@@ -12,6 +13,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 
 export default function AppBarNavigation() {
+  const [username, setUsername] = React.useState(
+    localStorage.getItem("username")
+  );
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -26,7 +31,7 @@ export default function AppBarNavigation() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Login Page
+            {username || "Login Page"}
           </Typography>
           <Link to="/login" color="primary">
             <Button color="inherit">Login</Button>

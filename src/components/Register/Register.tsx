@@ -30,8 +30,7 @@ const Register = () => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
-  const [registerUser, { data, error, loading }] =
-    useMutation(REGISTER_MUTATION);
+  const [registerUser, { data, error }] = useMutation(REGISTER_MUTATION);
   if (error) {
     showToastError(error.message);
   }

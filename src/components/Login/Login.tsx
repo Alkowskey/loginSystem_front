@@ -29,15 +29,14 @@ const Login = () => {
   const handleChange = (prop: any) => (event: any) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-  const [login, { data, error, loading }] = useLazyQuery(LOGIN_QUERY);
+  const [login, { data, error }] = useLazyQuery(LOGIN_QUERY);
   if (error) {
     showToastError(error.message);
-    console.log(JSON.stringify(error, null, 2));
   }
   if (data && data.login.token) {
     showToastSuccess("🦄 Logged in succesfully!");
     localStorage.setItem("token", data.login.token as string);
-    console.log(data.login.token);
+    localStorage.setItem("username", values.username as string);
   }
 
   return (
