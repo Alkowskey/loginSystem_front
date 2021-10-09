@@ -5,10 +5,16 @@ import AppBarNavigation from "./components/AppBarNavigation/AppBarNavigation";
 import "./App.css";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import background from "./shared/background.png";
 
 function App() {
   return (
-    <div>
+    <div
+      className="MainApp"
+      style={{
+        backgroundImage: `url(${background})`,
+      }}
+    >
       <Router>
         <AppBarNavigation />
         <Switch>
